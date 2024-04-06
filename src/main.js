@@ -2,20 +2,29 @@
 import iziToast from 'izitoast';
 // Додатковий імпорт стилів
 import 'izitoast/dist/css/iziToast.min.css';
-import { request, markup, renderMore, clearInput } from './js/render-functions';
-// import { button, } from './js/render-functions';
+import { markup, gallery } from './js/render-functions';
+import { pagination, totalHits } from './js/pixabay-api';
 
+const loadBtn = document.querySelector('.load-button');
+loadBtn.style.display = 'none';
 const input = document.querySelector('.search');
 const button = document.querySelector('.button');
-const gallery = document.querySelector('.gallery');
-const loadBtn = document.querySelector('.load-button');
 
-loadBtn.style.display = 'none';
-
+let inputValue = '';
+function request() {
+  inputValue = input.value.trim();
+  return inputValue;
+}
+function saveSearchWord() {
+  const searchWord = inputValue;
+  return searchWord;
+}
 function renderImages(evt) {
   evt.preventDefault();
-  const searchWord = request();
-  if (searchWord.length === 0) {
+
+  saveSearchWord();
+  if (request().length === 0) {
+    console.log(`${request()}----`);
     iziToast.error({
       theme: 'dark',
       message: 'The field must be fullfield',
@@ -25,15 +34,36 @@ function renderImages(evt) {
       progressBarColor: '#B51B1B',
     });
   } else {
+    console.log(request());
     gallery.innerHTML = '';
-
+    pagination.page = 1;
     markup();
-    clearInput();
+    input.value = '';
     loadBtn.style.display = 'block';
-    // input.value = '';
   }
 }
 
-input.addEventListener('input', request);
+loadBtn.addEventListener('click', event => {
+  pagination.page++;
+
+  input.value = saveSearchWord();
+  const totalPages = Math.ceil(totalHits / pagination.per_page);
+  const loadItems = pagination.page * pagination.per_page;
+
+  if (pagination.page === totalPages) {
+    pagination.per_page = loadItems - totalHits;
+    console.log(pagination.per_page);
+    markup();
+    event.target.style.display = 'none';
+
+    return iziToast.info({
+      position: 'topRight',
+      message: "We're sorry, there are no more posts to load",
+    });
+  }
+  markup();
+  input.value = '';
+});
+
 button.addEventListener('click', renderImages);
-loadBtn.addEventListener('click', renderMore);
+// button.addEventListener('click', clearInput);

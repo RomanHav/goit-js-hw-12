@@ -4,7 +4,7 @@ export let pagination = {
   page: 1,
   per_page: 15,
 };
-
+export let totalHits = 0;
 export async function fetchInfo(searchWord) {
   try {
     const params = {
@@ -22,6 +22,7 @@ export async function fetchInfo(searchWord) {
     if (response.status !== 200) {
       throw new Error(response.status);
     }
+    totalHits = response.data.totalHits;
     return response.data;
   } catch (error) {
     console.error('Fetch error:', error);

@@ -1,4 +1,5 @@
-import { fetchInfo, pagination } from './pixabay-api';
+import { fetchInfo } from './pixabay-api';
+// import { inputValue } from '../main';
 
 // Описаний у документації
 import iziToast from 'izitoast';
@@ -10,27 +11,18 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const input = document.querySelector('.search');
-let inputValue = '';
-
-export function request() {
-  inputValue = input.value.trim();
-  return inputValue;
-}
-
-export function clearInput() {
-  input.value = ''; // Очищаємо інпут
-}
+const loadButton = document.querySelector('.load-button');
+export const gallery = document.querySelector('.gallery');
+const loader = document.querySelector('.loader');
 
 export async function markup() {
-  const gallery = document.querySelector('.gallery');
-  const loader = document.querySelector('.loader');
-  const searchWord = request();
   loader.style.display = 'block';
 
   try {
-    const data = await fetchInfo(searchWord);
+    const data = await fetchInfo(input.value.trim());
     if (data.hits.length === 0) {
       loader.style.display = 'none';
+
       iziToast.error({
         theme: 'dark',
         message:
@@ -40,32 +32,33 @@ export async function markup() {
         position: 'topRight',
         progressBarColor: '#B51B1B',
       });
+      loadButton.style.display = 'none';
     } else {
       const images = data.hits
         .map(element => {
           return `<li class="gallery-item">
         <a class="image-link" href="${element.largeImageURL}">
-          <img class="image" src="${element.webformatURL}" alt="${element.tags}" />
+        <img class="image" src="${element.webformatURL}" alt="${element.tags}" />
         </a>
         <ul class="about-image">
-          <li class="likes">
+        <li class="likes">
             <span class="likes-title">Likes</span>
             <span class="likes-count">${element.likes}</span>
-          </li>
-          <li class="views">
+            </li>
+            <li class="views">
             <span class="views-title">Views</span>
             <span class="views-count">${element.views}</span>
-          </li>
-          <li class="comments">
+            </li>
+            <li class="comments">
             <span class="comments-title">Comments</span>
             <span class="comments-count">${element.comments}</span>
-          </li>
-          <li class="downloads">
+            </li>
+            <li class="downloads">
             <span class="downloads-title">Downloads</span>
             <span class="downloads-count">${element.downloads}</span>
-          </li>
-        </ul>
-      </li>`;
+            </li>
+            </ul>
+            </li>`;
         })
         .join('');
       loader.style.display = 'none';
@@ -75,13 +68,16 @@ export async function markup() {
         captionsDelay: 250,
       });
       largeGallery.refresh();
+      // loadButton.style.display = 'block';
+      const item = document.querySelector('.gallery-item');
+      const rect = item.getBoundingClientRect();
+      console.log(item.getBoundingClientRect());
+      window.scrollBy({
+        top: rect.height * 2,
+        behavior: 'smooth',
+      });
     }
   } catch (error) {
     console.error('Error fetching data:', error);
   }
-}
-
-export async function renderMore() {
-  pagination.page += 1;
-  markup();
 }

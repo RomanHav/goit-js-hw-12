@@ -25,9 +25,9 @@
 }
 .loader {
   display: none;
-  position: absolute;
+  /* position: relative;
   top: 20%;
-  left: 50%;
+  left: 50%; */
   transform: translate(-50%, -50%) rotateZ(45deg);
   perspective: 1000px;
   border-radius: 50%;
@@ -38,6 +38,10 @@
   -moz-transform: translate(-50%, -50%) rotateZ(45deg);
   -ms-transform: translate(-50%, -50%) rotateZ(45deg);
   -o-transform: translate(-50%, -50%) rotateZ(45deg);
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
 }
 .loader:before,
 .loader:after {
@@ -53,7 +57,7 @@
   animation: 1s spin linear infinite;
 }
 .loader:after {
-  color: #ff3d00;
+  color: #4e75ff;
   transform: rotateY(70deg);
   animation-delay: 0.4s;
 }
@@ -131,7 +135,7 @@
 }
 .search::placeholder {
   color: #808080;
-  font-family: Montserrat;
+  font-family: Montserrat, sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -145,7 +149,7 @@
   border-radius: 8px;
   background: #4e75ff;
   color: #fff;
-  font-family: Montserrat;
+  font-family: Montserrat, sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -154,6 +158,27 @@
 }
 .button:hover {
   background: #6c8cff;
+}
+.loaders {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+.load-button {
+  min-width: 91px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #4e75ff;
+  color: #fff;
+  font-family: Montserrat, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.64px;
 }
 .gallery {
   display: flex;
@@ -185,7 +210,7 @@
 }
 .likes-title {
   color: #2e2f42;
-  font-family: Montserrat;
+  font-family: Montserrat, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -194,7 +219,7 @@
 }
 .likes-count {
   color: #2e2f42;
-  font-family: Montserrat;
+  font-family: Montserrat, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -209,7 +234,7 @@
 }
 .views-title {
   color: #2e2f42;
-  font-family: Montserrat;
+  font-family: Montserrat, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -218,7 +243,7 @@
 }
 .views-count {
   color: #2e2f42;
-  font-family: Montserrat;
+  font-family: Montserrat, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -233,7 +258,7 @@
 }
 .comments-title {
   color: #2e2f42;
-  font-family: Montserrat;
+  font-family: Montserrat, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -242,7 +267,7 @@
 }
 .comments-count {
   color: #2e2f42;
-  font-family: Montserrat;
+  font-family: Montserrat, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -257,7 +282,7 @@
 }
 .downloads-title {
   color: #2e2f42;
-  font-family: Montserrat;
+  font-family: Montserrat, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -266,7 +291,7 @@
 }
 .downloads-count {
   color: #2e2f42;
-  font-family: Montserrat;
+  font-family: Montserrat, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
